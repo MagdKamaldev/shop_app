@@ -16,7 +16,9 @@ To get started with the Shop App, you'll need to have Flutter installed on your 
 
 
 $ git clone https://github.com/MagdKamaldev/shop_app.git
+
 $ cd shop_app
+
 $ flutter run
 
 
