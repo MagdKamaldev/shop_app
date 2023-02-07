@@ -50,3 +50,4 @@ class ShopUpdateUserDataSuccessState extends ShopStates {
 
 class ShopUpdateUserDataErrorState extends ShopStates {}
 
+class ShopChangeAppModeState extends ShopStates{}

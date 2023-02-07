@@ -21,18 +21,21 @@ ThemeData lightTheme = ThemeData(
           fontWeight: FontWeight.bold,
           fontFamily: "Cairo"),
     ),
+    drawerTheme: DrawerThemeData(
+      backgroundColor: Colors.white,
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: defaultColor,
       elevation: 30.0,
     ),
     textTheme: TextTheme(
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
         color: Colors.black,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,
         color: Colors.black,
@@ -59,6 +62,9 @@ ThemeData darkTheme = ThemeData(
           fontSize: 20.0,
           fontWeight: FontWeight.bold),
     ),
+    drawerTheme: DrawerThemeData(
+      backgroundColor: HexColor("333739"),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: defaultColor,
@@ -67,13 +73,13 @@ ThemeData darkTheme = ThemeData(
       backgroundColor: HexColor("333739"),
     ),
     textTheme: TextTheme(
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         fontSize: 18,
         fontFamily: "Cairo",
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,
         color: Colors.white,

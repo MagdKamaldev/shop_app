@@ -47,13 +47,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ShopCubit()
+        BlocProvider(create: (context) {
+          bool isDark = CacheHelper.getData(key: 'isDark');
+          return ShopCubit()
+            ..changeAppMode(fromShared: isDark)
             ..getHomeData()
             ..getCategoriesData()
             ..getFavouritesData()
-            ..getUserData(),
-        ),
+            ..getUserData();
+        }),
       ],
       child: BlocConsumer<ShopCubit, ShopStates>(
         listener: (context, state) => {},
@@ -63,7 +65,9 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             home: startWidget,
-            themeMode: ThemeMode.light,
+            themeMode: ShopCubit.get(context).isDark
+                ? ThemeMode.dark
+                : ThemeMode.light,
             debugShowCheckedModeBanner: false,
           );
         },

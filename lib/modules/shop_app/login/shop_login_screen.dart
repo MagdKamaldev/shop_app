@@ -59,7 +59,7 @@ class ShopLoginScreen extends StatelessWidget {
                             "LOGIN",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline4!
+                                .headlineMedium!
                                 .copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
@@ -71,7 +71,7 @@ class ShopLoginScreen extends StatelessWidget {
                             "Login now to browse our hot offers",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(color: Colors.grey),
                           ),
                           SizedBox(

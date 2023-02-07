@@ -54,7 +54,7 @@ class ShopRegisterScreen extends StatelessWidget {
                             "REGISTER",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline4!
+                                .headlineMedium!
                                 .copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
@@ -66,7 +66,7 @@ class ShopRegisterScreen extends StatelessWidget {
                             "Register now to browse our hot offers",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(color: Colors.grey),
                           ),
                           SizedBox(

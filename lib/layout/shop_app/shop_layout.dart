@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_cubit.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_states.dart';
 
+import '../../modules/drawer/drawer.dart';
+
 class ShopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class ShopLayout extends StatelessWidget {
           appBar: AppBar(
             title: Text("Salla"),
           ),
+          drawer: AppDrawer(),
           body: cubit.bottomScreens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
               onTap: (index) {
@@ -35,8 +38,8 @@ class ShopLayout extends StatelessWidget {
                   icon: Icon(Icons.favorite),
                 ),
                 BottomNavigationBarItem(
-                  label: "Settings",
-                  icon: Icon(Icons.settings),
+                  label: "Cart",
+                  icon: Icon(Icons.shopping_cart),
                 ),
               ]),
         );

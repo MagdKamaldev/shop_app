@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:udemy_course/shared/styles/icon_broken.dart';
 
+Widget defaultDivider() => Container(
+      width: double.infinity,
+      height: 1,
+      color: Colors.grey[300],
+    );
 
 Widget defaultTextButton({
   required String text,
@@ -20,7 +25,7 @@ Widget defaultButton({
   required String text,
 }) =>
     Container(
-      height: height,
+        height: height,
         width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
@@ -81,25 +86,23 @@ Widget defaultFormField({
         border: OutlineInputBorder(),
       ),
     );
-    
+
 PreferredSizeWidget? defaultAppBar({
   required BuildContext context,
-  String ? title,
-  List<Widget> ? actions,
-})=>AppBar(
-  titleSpacing: 5.0,
-  leading: IconButton(
-    onPressed: (){
-      Navigator.pop(context);
-    },
-    icon: Icon(IconBroken.Arrow___Left_2),
-  ),
-  title: Text(title!),
-  actions: actions,
-);
-
-
-
+  String? title,
+  List<Widget>? actions,
+}) =>
+    AppBar(
+      titleSpacing: 5.0,
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(IconBroken.Arrow___Left_2),
+      ),
+      title: Text(title!),
+      actions: actions,
+    );
 
 Widget myDivider() => Padding(
       padding: const EdgeInsetsDirectional.only(
@@ -111,8 +114,6 @@ Widget myDivider() => Padding(
         color: Colors.grey[300],
       ),
     );
-
-
 
 void navigateTo(context, widget) => Navigator.push(
     context,
@@ -153,4 +154,3 @@ Color chooseToastColor(ToasStates state) {
   }
   return color;
 }
-

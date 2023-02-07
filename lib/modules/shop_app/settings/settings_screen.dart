@@ -29,86 +29,91 @@ class SettingsScreen extends StatelessWidget {
                   ShopCubit.get(context).userModel!.data!.email!;
               phoneController.text =
                   ShopCubit.get(context).userModel!.data!.phone!;
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      if (state is ShopUpdateUserDataLoadingState)
-                        LinearProgressIndicator(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultFormField(
-                          controller: nameController,
-                          type: TextInputType.name,
-                          onSubmit: () {},
-                          onTab: () {},
-                          onChanged: () {},
-                          validate: (String value) {
-                            if (value.isEmpty) {
-                              return "name must not be empty";
-                            }
-                          },
-                          label: "Name",
-                          prefix: Icons.person),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultFormField(
-                          controller: emailController,
-                          type: TextInputType.emailAddress,
-                          onSubmit: () {},
-                          onTab: () {},
-                          onChanged: () {},
-                          validate: (String value) {
-                            if (value.isEmpty) {
-                              return "E-mail must not be empty";
-                            }
-                          },
-                          label: "E-mail adress",
-                          prefix: Icons.email),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultFormField(
-                          controller: phoneController,
-                          type: TextInputType.phone,
-                          onSubmit: () {},
-                          onTab: () {},
-                          onChanged: () {},
-                          validate: (String value) {
-                            if (value.isEmpty) {
-                              return "phone must not be empty";
-                            }
-                          },
-                          label: "phone",
-                          prefix: Icons.phone),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultButton(
-                          function: () {
-                            if (formKey.currentState!.validate()) {
-                              ShopCubit.get(context).updateUserData(
-                                  name: nameController.text,
-                                  phone: phoneController.text,
-                                  email: emailController.text);
-                            }
-                          },
-                          text: "update",
-                          isUpperCase: true),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultButton(
-                          function: () {
-                            signout(context);
-                          },
-                          text: "Signout",
-                          isUpperCase: true)
-                    ],
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text("Settings"),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        if (state is ShopUpdateUserDataLoadingState)
+                          LinearProgressIndicator(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        defaultFormField(
+                            controller: nameController,
+                            type: TextInputType.name,
+                            onSubmit: () {},
+                            onTab: () {},
+                            onChanged: () {},
+                            validate: (String value) {
+                              if (value.isEmpty) {
+                                return "name must not be empty";
+                              }
+                            },
+                            label: "Name",
+                            prefix: Icons.person),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        defaultFormField(
+                            controller: emailController,
+                            type: TextInputType.emailAddress,
+                            onSubmit: () {},
+                            onTab: () {},
+                            onChanged: () {},
+                            validate: (String value) {
+                              if (value.isEmpty) {
+                                return "E-mail must not be empty";
+                              }
+                            },
+                            label: "E-mail adress",
+                            prefix: Icons.email),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        defaultFormField(
+                            controller: phoneController,
+                            type: TextInputType.phone,
+                            onSubmit: () {},
+                            onTab: () {},
+                            onChanged: () {},
+                            validate: (String value) {
+                              if (value.isEmpty) {
+                                return "phone must not be empty";
+                              }
+                            },
+                            label: "phone",
+                            prefix: Icons.phone),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        defaultButton(
+                            function: () {
+                              if (formKey.currentState!.validate()) {
+                                ShopCubit.get(context).updateUserData(
+                                    name: nameController.text,
+                                    phone: phoneController.text,
+                                    email: emailController.text);
+                              }
+                            },
+                            text: "update",
+                            isUpperCase: true),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        defaultButton(
+                            function: () {
+                              signout(context);
+                            },
+                            text: "Signout",
+                            isUpperCase: true)
+                      ],
+                    ),
                   ),
                 ),
               );

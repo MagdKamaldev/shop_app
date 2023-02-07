@@ -5,15 +5,16 @@ import 'package:udemy_course/layout/shop_app/cubit/shop_states.dart';
 import 'package:udemy_course/models/shop_app/categories_model.dart';
 import 'package:udemy_course/models/shop_app/cahnge_favourites_model.dart';
 import 'package:udemy_course/models/shop_app/home_model.dart';
+import 'package:udemy_course/modules/cart/cart_screen.dart';
 import 'package:udemy_course/modules/shop_app/categories/categories_screen.dart';
 import 'package:udemy_course/modules/shop_app/favourites/favourites_screen.dart';
 import 'package:udemy_course/modules/shop_app/products/products_screen.dart';
-import 'package:udemy_course/modules/shop_app/settings/settings_screen.dart';
 import 'package:udemy_course/shared/components/constants.dart';
 import 'package:udemy_course/shared/networks/remote/dio_helper.dart';
 import '../../../models/shop_app/favorites_model.dart';
 import '../../../models/shop_app/login_model.dart';
 import '../../../shared/networks/end_points.dart';
+import '../../../shared/networks/local/cache_helper.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(ShopInitialState());
@@ -23,11 +24,12 @@ class ShopCubit extends Cubit<ShopStates> {
     ProductsScreen(),
     CategoriesScreen(),
     FavouritesScreen(),
-    SettingsScreen(),
+    CartScreen(),
   ];
   void chnageBottom(int index) {
     currentIndex = index;
     emit(ShopChnageBottomNavState());
+    print(token.toString());
   }
 
   HomeModel? homeModel;
@@ -110,7 +112,7 @@ class ShopCubit extends Cubit<ShopStates> {
     emit(ShopGetUserDataLoadingState());
     DioHelper.getData(url: profile, authorization: token).then((value) {
       userModel = ShopLoginModel.fromJson(value.data);
-      print(userModel!.data!.name);
+
       emit(ShopGetUserDataSuccessState(userModel!));
     }).catchError((error) {
       print(error.toString());
@@ -118,20 +120,17 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-   void updateUserData({
+  void updateUserData({
     required String name,
     required String phone,
     required String email,
-   }) {
+  }) {
     emit(ShopUpdateUserDataLoadingState());
-    DioHelper.putData(
-      url: updateProfile,
-       authorization: token,
-       data: {
-       "name":name,
-       "email":email,
-       "phone":phone,       }
-       ).then((value) {
+    DioHelper.updateData(url: updateProfile, authorization: token, data: {
+      "name": name,
+      "email": email,
+      "phone": phone,
+    }).then((value) {
       userModel = ShopLoginModel.fromJson(value.data);
       print(userModel!.data!.name);
       emit(ShopUpdateUserDataSuccessState(userModel!));
@@ -139,5 +138,18 @@ class ShopCubit extends Cubit<ShopStates> {
       print(error.toString());
       emit(ShopUpdateUserDataErrorState());
     });
+  }
+
+  bool isDark = false;
+
+  void changeAppMode({bool? fromShared}) {
+    if (fromShared != null) {
+      isDark = fromShared;
+    } else {
+      isDark = !isDark;
+      CacheHelper.putBool(key: "isDark", value: isDark).then((value) {
+        emit(ShopChangeAppModeState());
+      });
+    }
   }
 }
