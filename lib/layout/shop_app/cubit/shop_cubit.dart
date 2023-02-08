@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_states.dart';
+import 'package:udemy_course/models/shop_app/cart_model.dart';
 import 'package:udemy_course/models/shop_app/categories_model.dart';
 import 'package:udemy_course/models/shop_app/cahnge_favourites_model.dart';
 import 'package:udemy_course/models/shop_app/home_model.dart';
@@ -13,6 +14,7 @@ import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/components/constants.dart';
 import 'package:udemy_course/shared/networks/remote/dio_helper.dart';
 import '../../../models/shop_app/favorites_model.dart';
+import '../../../models/shop_app/get_cart_model.dart';
 import '../../../models/shop_app/login_model.dart';
 import '../../../shared/networks/end_points.dart';
 import '../../../shared/networks/local/cache_helper.dart';
@@ -29,8 +31,13 @@ class ShopCubit extends Cubit<ShopStates> {
   ];
   void chnageBottom(int index) {
     currentIndex = index;
+    if (index == 2) {
+      getFavouritesData();
+    }
+    if (index == 3) {
+      getCartData();
+    }
     emit(ShopChnageBottomNavState());
-    print(token.toString());
   }
 
   HomeModel? homeModel;
@@ -47,6 +54,9 @@ class ShopCubit extends Cubit<ShopStates> {
       homeModel!.data!.products.forEach((element) {
         favourites.addAll({
           element.id!: element.inFavourites!,
+        });
+        cartItems.addAll({
+          element.id!: element.inCart!,
         });
       });
       emit(ShopGetHomeDataSuccessState());
@@ -153,5 +163,43 @@ class ShopCubit extends Cubit<ShopStates> {
         emit(ShopChangeAppModeState());
       });
     }
+  }
+
+  CartData? changeCart;
+  Map<int, bool> cartItems = {};
+
+  void addToCart(int productId) {
+    cartItems[productId] = !cartItems[productId]!;
+    emit(ShopAddToCartSuccesState());
+    DioHelper.postData(
+      url: carts,
+      data: {"product_id": productId},
+      authorization: token,
+    ).then((value) {
+      changeCart = CartData.fromJson(value.data);
+      if (!changeCart!.status) {
+        cartItems[productId] = !cartItems[productId]!;
+      } else {
+        getCartData();
+      }
+      getCartData();
+      emit(ShopAddToCartSuccesState());
+    }).catchError((error) {
+      cartItems[productId] = !cartItems[productId]!;
+      emit(ShopAddToCartErrorState());
+    });
+  }
+
+  GetCartModel? getCartModel;
+
+  void getCartData() {
+    emit(ShopGetCartDataLoadingState());
+    DioHelper.getData(url: carts, authorization: token).then((value) {
+      getCartModel = GetCartModel.fromJson(value.data);
+      emit(ShopGetCartDataSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopGetFavouritesDataErrorState());
+    });
   }
 }

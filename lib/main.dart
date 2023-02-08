@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
             ..changeAppMode(fromShared: isDark)
             ..getHomeData()
             ..getCategoriesData()
-            ..getFavouritesData()
             ..getUserData();
         }),
       ],

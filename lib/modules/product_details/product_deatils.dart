@@ -71,9 +71,12 @@ class ProductDetailsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 25,
                 ),
-                defaultButton(function: () {
-                  
-                }, text: "Add To Cart", height: 50)
+                defaultButton(
+                    function: () {
+                      ShopCubit.get(context).addToCart(model.id!);
+                    },
+                    text: "add To cart",
+                    height: 50),
               ],
             ),
           ),

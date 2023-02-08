@@ -220,7 +220,7 @@ Widget buildGridProduct(ProductModel model, context, index) => GestureDetector(
                         },
                         icon: CircleAvatar(
                           radius: 15.0,
-                          backgroundColor: Colors.redAccent,
+                          backgroundColor: defaultColor,
                           child: Icon(
                             Icons.favorite_border_outlined,
                             size: 12,

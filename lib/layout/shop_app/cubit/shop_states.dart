@@ -51,3 +51,17 @@ class ShopUpdateUserDataSuccessState extends ShopStates {
 class ShopUpdateUserDataErrorState extends ShopStates {}
 
 class ShopChangeAppModeState extends ShopStates{}
+
+//add to cart
+
+class ShopAddToCartSuccesState extends ShopStates{}
+
+class ShopAddToCartErrorState extends ShopStates{}
+
+//get cart
+
+class ShopGetCartDataLoadingState extends ShopStates {}
+
+class ShopGetCartDataSuccessState extends ShopStates {}
+
+class ShopGetCartDataErrorState extends ShopStates {}

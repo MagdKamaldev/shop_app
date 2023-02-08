@@ -3,7 +3,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../layout/shop_app/cubit/shop_cubit.dart';
 import '../../../layout/shop_app/cubit/shop_states.dart';
 import '../../../shared/components/components.dart';
@@ -73,7 +72,10 @@ Widget buildFavItem(model, context) => Padding(
                     model.name.toString(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, height: 1.3),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 14),
                   ),
                   Spacer(),
                   Row(
@@ -104,7 +106,7 @@ Widget buildFavItem(model, context) => Padding(
                         },
                         icon: CircleAvatar(
                           radius: 15.0,
-                          backgroundColor: Colors.redAccent,
+                          backgroundColor: defaultColor,
                           child: Icon(
                             Icons.favorite_border_outlined,
                             size: 12,
