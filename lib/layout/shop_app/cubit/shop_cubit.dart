@@ -9,6 +9,7 @@ import 'package:udemy_course/modules/cart/cart_screen.dart';
 import 'package:udemy_course/modules/shop_app/categories/categories_screen.dart';
 import 'package:udemy_course/modules/shop_app/favourites/favourites_screen.dart';
 import 'package:udemy_course/modules/shop_app/products/products_screen.dart';
+import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/components/constants.dart';
 import 'package:udemy_course/shared/networks/remote/dio_helper.dart';
 import '../../../models/shop_app/favorites_model.dart';
@@ -86,6 +87,7 @@ class ShopCubit extends Cubit<ShopStates> {
       } else {
         getFavouritesData();
       }
+      showToast(text: "State changed Succefully", state: ToasStates.succes);
       emit(ShopChangeFavouritesSuccessState(changeFavouritesmodel!));
     }).catchError((error) {
       favourites[productId] = !favourites[productId]!;

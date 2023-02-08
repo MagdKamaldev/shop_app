@@ -7,6 +7,7 @@ import 'package:udemy_course/layout/shop_app/cubit/shop_cubit.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_states.dart';
 import 'package:udemy_course/models/shop_app/categories_model.dart';
 import 'package:udemy_course/models/shop_app/home_model.dart';
+import 'package:udemy_course/modules/product_details/product_deatils.dart';
 import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/styles/colors.dart';
 
@@ -17,7 +18,7 @@ class ProductsScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is ShopChangeFavouritesSuccessState) {
           if (!state.model.status!) {
-            showToast(text: state.model.message!, state:ToasStates.error);
+            showToast(text: state.model.message!, state: ToasStates.error);
           }
         }
       },
@@ -74,10 +75,11 @@ class ProductsScreen extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  Text(
-                    "Categories",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-                  ),
+                  Text("Categories",
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontSize: 24, fontWeight: FontWeight.w800)),
                   SizedBox(
                     height: 10.0,
                   ),
@@ -97,7 +99,10 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   Text(
                     "New Products",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 24, fontWeight: FontWeight.w800),
                   ),
                   SizedBox(
                     height: 10.0,
@@ -114,7 +119,7 @@ class ProductsScreen extends StatelessWidget {
                       children: List.generate(
                         model.data!.products.length,
                         (index) => buildGridProduct(
-                            model.data!.products[index], context),
+                            model.data!.products[index], context, index),
                       ),
                     ),
                   )
@@ -148,85 +153,87 @@ Widget categoryItem(DataModel model) => Stack(
       ],
     );
 
-Widget buildGridProduct(ProductModel model, context) => Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              Image(
-                image: NetworkImage(model.image!),
-                width: double.infinity,
-                height: 200.0,
-              ),
-              if (model.discount != 0)
-                Container(
-                  color: Colors.red,
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Text(
-                    "Discount",
-                    style: TextStyle(fontSize: 8, color: Colors.white),
-                  ),
-                ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+Widget buildGridProduct(ProductModel model, context, index) => GestureDetector(
+      onTap: () {
+        navigateTo(context, ProductDetailsScreen(index));
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.bottomStart,
               children: [
-                Text(
-                  model.name!,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 14, height: 1.3),
+                Image(
+                  image: NetworkImage(model.image!),
+                  width: double.infinity,
+                  height: 200.0,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      model.price.toString(),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 12, color: defaultColor),
+                if (model.discount != 0)
+                  Container(
+                    color: Colors.red,
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      "Discount",
+                      style: TextStyle(fontSize: 8, color: Colors.white),
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    if (model.discount != 0)
-                      Text(
-                        model.oldPrice.toString(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough),
-                      ),
-                    Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        ShopCubit.get(context).changeFavourites(model.id!);
-                      },
-                      icon: CircleAvatar(
-                        radius: 15.0,
-                        backgroundColor:
-                            ShopCubit.get(context).favourites[model.id]!
-                                ? defaultColor
-                                : Colors.grey,
-                        child: Icon(
-                          Icons.favorite_border_outlined,
-                          size: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
               ],
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.name!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 14, height: 1.3),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        model.price.toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12, color: defaultColor),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      if (model.discount != 0)
+                        Text(
+                          model.oldPrice.toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough),
+                        ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          ShopCubit.get(context).changeFavourites(model.id!);
+                        },
+                        icon: CircleAvatar(
+                          radius: 15.0,
+                          backgroundColor: Colors.redAccent,
+                          child: Icon(
+                            Icons.favorite_border_outlined,
+                            size: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );

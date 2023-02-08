@@ -22,7 +22,11 @@ class FavouritesScreen extends StatelessWidget {
           condition: state is! ShopGetFavouritesDataLoadingState,
           builder: (context) => ListView.separated(
             itemBuilder: (context, index) => buildFavItem(
-                ShopCubit.get(context).favoritesModel!.data!.data[index].product!,
+                ShopCubit.get(context)
+                    .favoritesModel!
+                    .data!
+                    .data[index]
+                    .product!,
                 context),
             separatorBuilder: (context, index) => myDivider(),
             itemCount: ShopCubit.get(context).favoritesModel!.data!.data.length,
@@ -31,95 +35,89 @@ class FavouritesScreen extends StatelessWidget {
       },
     );
   }
-
- 
 }
 
- Widget buildFavItem(model, context) => Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SizedBox(
-          height: 120,
-          child: Row(
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomStart,
-                children: [
-                  Image(
-                    image: NetworkImage(model.image.toString()),
-                    width: 120,
-                    height: 120,
+Widget buildFavItem(model, context) => Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: SizedBox(
+        height: 120,
+        child: Row(
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.bottomStart,
+              children: [
+                Image(
+                  image: NetworkImage(model.image.toString()),
+                  width: 120,
+                  height: 120,
+                ),
+                if (model.discount != 0)
+                  Container(
+                    color: Colors.red,
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      "Discount",
+                      style: TextStyle(fontSize: 8, color: Colors.white),
+                    ),
                   ),
-                  if (model.discount != 0)
-                    Container(
-                      color: Colors.red,
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(
-                        "Discount",
-                        style: TextStyle(fontSize: 8, color: Colors.white),
+              ],
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.name.toString(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 14, height: 1.3),
+                  ),
+                  Spacer(),
+                  Row(
+                    children: [
+                      Text(
+                        model.price.toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12, color: defaultColor),
                       ),
-                    ),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      model.name.toString(),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14, height: 1.3),
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
+                      SizedBox(
+                        width: 5,
+                      ),
+                      if (model.discount != 0)
                         Text(
-                          model.price.toString(),
+                          model.oldPrice.toString(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12, color: defaultColor),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        if (model.discount != 0)
-                          Text(
-                            model.oldPrice.toString(),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough),
-                          ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            ShopCubit.get(context)
-                                .changeFavourites(model.id!);
-                          },
-                          icon: CircleAvatar(
-                            radius: 15.0,
-                            backgroundColor: ShopCubit.get(context)
-                                    .favourites[model.id]!
-                                ? defaultColor
-                                : Colors.grey,
-                            child: Icon(
-                              Icons.favorite_border_outlined,
-                              size: 12,
-                              color: Colors.white,
-                            ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          ShopCubit.get(context).changeFavourites(model.id!);
+                        },
+                        icon: CircleAvatar(
+                          radius: 15.0,
+                          backgroundColor: Colors.redAccent,
+                          child: Icon(
+                            Icons.favorite_border_outlined,
+                            size: 12,
+                            color: Colors.white,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
-      );
+      ),
+    );
