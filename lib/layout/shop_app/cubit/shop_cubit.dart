@@ -182,7 +182,7 @@ class ShopCubit extends Cubit<ShopStates> {
       } else {
         getCartData();
       }
-      getCartData();
+      
       emit(ShopAddToCartSuccesState());
     }).catchError((error) {
       cartItems[productId] = !cartItems[productId]!;
@@ -190,7 +190,7 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-  GetCartModel? getCartModel;
+  GetCartModel ? getCartModel;
 
   void getCartData() {
     emit(ShopGetCartDataLoadingState());

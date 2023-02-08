@@ -44,7 +44,11 @@ class CategoriesScreen extends StatelessWidget {
                   .copyWith(fontSize: 18),
             ),
             Spacer(),
-            Icon(Icons.arrow_forward_ios),
+            Icon(
+              Icons.arrow_forward_ios,
+              color:
+                  ShopCubit.get(context).isDark ? Colors.white : Colors.black,
+            ),
           ],
         ),
       );

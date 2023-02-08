@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_cubit.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_states.dart';
+import 'package:udemy_course/modules/checkout/checkout_screen.dart';
 
 import '../../shared/components/components.dart';
 import '../../shared/styles/colors.dart';
@@ -19,7 +20,7 @@ class CartScreen extends StatelessWidget {
           fallback: (context) => const Center(
             child: CircularProgressIndicator(),
           ),
-          condition: state is! ShopGetFavouritesDataLoadingState,
+          condition: ShopCubit.get(context).getCartModel != null,
           builder: (context) => Column(
             children: [
               Expanded(
@@ -41,8 +42,11 @@ class CartScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child:
-                    defaultButton(function: () {}, text: "proceed to checkout"),
+                child: defaultButton(
+                    function: () {
+                      navigateTo(context, const CheckOutScreen());
+                    },
+                    text: "proceed to checkout"),
               ),
             ],
           ),

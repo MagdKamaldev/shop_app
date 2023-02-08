@@ -18,7 +18,7 @@ class FavouritesScreen extends StatelessWidget {
           fallback: (context) => Center(
             child: CircularProgressIndicator(),
           ),
-          condition: state is! ShopGetFavouritesDataLoadingState,
+          condition: ShopCubit.get(context).favoritesModel != null,
           builder: (context) => ListView.separated(
             itemBuilder: (context, index) => buildFavItem(
                 ShopCubit.get(context)

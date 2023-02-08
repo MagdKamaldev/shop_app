@@ -5,6 +5,7 @@ import 'package:udemy_course/layout/shop_app/cubit/shop_cubit.dart';
 import 'package:udemy_course/layout/shop_app/cubit/shop_states.dart';
 import 'package:udemy_course/modules/shop_app/settings/settings_screen.dart';
 import 'package:udemy_course/shared/components/components.dart';
+import 'package:udemy_course/shared/components/constants.dart';
 import 'package:udemy_course/shared/styles/colors.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -44,7 +45,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 defaultDivider(),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
                 Container(
                   color: Colors.blueGrey,
@@ -70,7 +71,7 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
                 Container(
                   color: Colors.blueGrey,
@@ -90,6 +91,34 @@ class AppDrawer extends StatelessWidget {
                         ),
                         const Icon(
                           Icons.settings,
+                          color: defaultColor,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  color: Colors.blueGrey,
+                  child: MaterialButton(
+                    onPressed: () {
+                      signout(context);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Sign Out",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(height: 1.4, color: Colors.white),
+                        ),
+                        const Icon(
+                          Icons.logout,
                           color: defaultColor,
                           size: 30,
                         ),

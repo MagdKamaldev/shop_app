@@ -62,6 +62,8 @@ class ShopAddToCartErrorState extends ShopStates{}
 
 class ShopGetCartDataLoadingState extends ShopStates {}
 
-class ShopGetCartDataSuccessState extends ShopStates {}
+class ShopGetCartDataSuccessState extends ShopStates {
+  
+}
 
 class ShopGetCartDataErrorState extends ShopStates {}
