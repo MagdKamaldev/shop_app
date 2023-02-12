@@ -48,12 +48,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) {
-          bool isDark = CacheHelper.getData(key: 'isDark');
+          bool? isDark = false;
           return ShopCubit()
             ..changeAppMode(fromShared: isDark)
+            ..getUserData()
             ..getHomeData()
-            ..getCategoriesData()
-            ..getUserData();
+            ..getCategoriesData();
         }),
       ],
       child: BlocConsumer<ShopCubit, ShopStates>(
